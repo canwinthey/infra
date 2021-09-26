@@ -10,24 +10,33 @@ eureka:
 
 
 spring:
-#  config:#    import: "optional:configserver:"  cloud:
-#    discovery:#      enabled: true
+  cloud:
     config:
       uri:
       - http://${CONFIG_SERVER:localhost}:8888/
     gateway:
- #     discovery: #       locator: #         enabled: true
- #         lower-case-service-id: true  
       routes:
         - id: theaters
           uri: lb://THEATER-SERVICE
           predicates:
             - Path=/theaters/**
+        - id: user
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**
+        - id: booking
+          uri: lb://BOOKING-SERVICE
+          predicates:
+            - Path=/booking/**
+        - id: payment
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/**
 
 logging:
   level:
     com:
-      logixal: error
+      logixal: info
 
 management:
   endpoints:
